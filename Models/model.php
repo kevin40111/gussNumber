@@ -19,7 +19,7 @@ class Model{
     }
 
     function checkRepeat($inputAnswer,$inputRecord){
-
+        $recordArray = array();
     }
 
     function checkAnswer($inputAnswer,$realAnswer){

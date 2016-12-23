@@ -18,6 +18,8 @@
                     echo $model->checkAnswer($_GET['inputAnswer'],$data["answer"]);
                 break;
 
+
+
                 default:
 
                 break;

@@ -104,7 +104,7 @@ $(document).ready(function(){
             success: function(result){
                 if(result == "4A0B"){
                     $("#display_answer").text($("#answer_input").val()+"："+"正解");
-                    $("#display_input").css("visibility","hidden");
+                    $('.middle-block-input-form > input').css("visibility","hidden");
                 }else{
                     $("#display_answer").text($("#answer_input").val()+"："+result);
                     $("#display_input").css("visibility","visible");
