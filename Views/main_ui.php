@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <title>猜數字</title>
 <style type="text/css">
 input::-webkit-inner-spin-button{
@@ -91,7 +92,32 @@ padding: 10px;
     font-size: 20px;
     bottom:0px;
 }
+
 </style>
+<script>
+$(document).ready(function(){
+    $('#answer_submit').click(function(){
+        $.ajax({
+            type: 'GET',
+            url: "index.php?action=checkAnswer&inputAnswer="+$("#answer_input").val(),
+            dataType: 'text',
+            success: function(result){
+                if(result == "4A0B"){
+                    $("#display_answer").text($("#answer_input").val()+"："+"正解");
+                    $("#display_input").css("visibility","hidden");
+                }else{
+                    $("#display_answer").text($("#answer_input").val()+"："+result);
+                    $("#display_input").css("visibility","visible");
+                }
+                $("#answer_input").val("");
+
+            }
+        });
+    });
+});
+
+
+</script>
 </head>
 <body>
 <div id = "main">
@@ -100,7 +126,7 @@ padding: 10px;
             <b><h1>猜數字</h1></b>
         </div>
         <div class = "block top-block-answer-prompt">
-            <span>答案提示：<?=$model->answer;?></span>
+            <span>答案提示：<?=$data["answer"];?></span>
             <span id="answer"></span>
         </div>
         <div class = "block top-block-button">
