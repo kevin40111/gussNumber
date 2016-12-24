@@ -1,37 +1,31 @@
 <?php
     require("Models/model.php");
+    session_start();
+    $model = new model();
 
-    function getCookie(){
-        $data = array();
-        $data["answer"] = $_COOKIE["answer"];
-        return $data;
-    }
-
-    if(isset($_COOKIE["answer"])){
-            $model = new model();
-            $data = getCookie();
-
-         if(isset($_GET['action'])){
-            switch ($_GET['action'])
+    if(isset($_SESSION["answer"])){
+        $realAnswer = $_SESSION["answer"];
+         if(isset($_POST['action'])){
+            switch ($_POST['action'])
             {
                 case 'checkAnswer':
-                    echo $model->checkAnswer($_GET['inputAnswer'],$data["answer"]);
+                echo $model->checkAnswer($_POST['inputAnswer'],$realAnswer);
                 break;
 
-
+                case 'restartGame':
+                session_unset();
+                break;
 
                 default:
-
                 break;
             }
 
         }else{
+            $answer = $_SESSION["answer"];
             require("views/main_ui.php");
         }
     }else{
-        $model = new model();
-        $data = getCookie();
-        setcookie("answer",$model->createAnswer(),time() + (86400 * 30), "/");
+        $_SESSION["answer"] = $model->createAnswer();
         header('Location: '.$_SERVER['PHP_SELF']);
         die;
     }

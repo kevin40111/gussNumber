@@ -1,12 +1,11 @@
 <?php
-
 class Model{
     function createAnswer(){
         $checkRepeat = array();
         $answer = "";
-        for($i=0;$i<4;$i++){
-            while(1)
-            {
+        $answerLenth = rand(4,10);
+        for($i=0;$i<$answerLenth;$i++){
+            while(1){
                 $rand = rand(0,9);
                 if(!in_array($rand, $checkRepeat))break;
             }
@@ -15,21 +14,21 @@ class Model{
         foreach ($checkRepeat as $value) {
              $answer.= $value;
         }
+
         return $answer;
     }
 
-    function checkRepeat($inputAnswer,$inputRecord){
-        $recordArray = array();
-    }
-
     function checkAnswer($inputAnswer,$realAnswer){
+
         $posRight=0;
         $allRight=0;
         $inputArray  = preg_split('//', $inputAnswer, -1, PREG_SPLIT_NO_EMPTY);
         $answerArray = preg_split('//', $realAnswer, -1, PREG_SPLIT_NO_EMPTY);
 
-        for($i=0;$i<4;$i++){
-            for($j=0;$j<4;$j++){
+        if(sizeof($answerArray)!= sizeof($inputArray))return "輸入長度不正確";
+
+        for($i=0;$i<sizeof($answerArray);$i++){
+            for($j=0;$j<sizeof($answerArray);$j++){
                 if($inputArray[$i] == $answerArray[$j] && $i==$j){
                     $allRight++;
                     break;
@@ -40,7 +39,12 @@ class Model{
             }
         }
 
-        return $allRight."A". $posRight."B";
+        $answerResult = $allRight."A". $posRight."B";
+        if($posRight==0){
+            return "正解";
+        }else{
+            return $answerResult;
+        }
 
     }
 }
